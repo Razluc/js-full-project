@@ -7,7 +7,7 @@ export default class Recipe {
     }
     async getRecipe(){
         try{
-            const res = await axios(`https://www.food2fork.com/api/get?key=${conn.key}&rId=${this.id}`);
+            const res = await axios(`https://cors-anywhere.herokuapp.com/https://www.food2fork.com/api/get?key=${conn.key}&rId=${this.id}`);
             this.title = res.data.recipe.title;
             this.author = res.data.recipe.publisher;
             this.img = res.data.recipe.image_url;
@@ -23,7 +23,7 @@ export default class Recipe {
         // For each 3 ingredients we need 15 min.
         const numIng = this.ingredients.length;
         const periods = Math.ceil(numIng / 3);
-        this.time = period * 15;
+        this.time = periods * 15;
     }
 
     calcServings() {

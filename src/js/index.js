@@ -2,6 +2,7 @@
 import Search from './modules/Search';
 import * as searchView from './view/searchView';
 import { elements, renderLoader, clearLoader } from './view/base';
+import Recipe from './modules/Recipe';
 
 /** Glogal state of the app
  * - Search Objec
@@ -44,9 +45,6 @@ elements.searchResPages.addEventListener('click', e => {
     }
 });
 
-// const search = new Search('pizza');
-// console.log(search);
-// search.getResults();
-
-// https://www.food2fork.com/api/search
-// 0a7feb282a2bf222d70cd7446f37ec77
+const r = new Recipe(46956);
+r.getRecipe();
+console.log(r);

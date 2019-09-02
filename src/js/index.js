@@ -1,6 +1,7 @@
 // Global app controller
 import Search from './modules/Search';
 import * as searchView from './view/searchView';
+import * as recipeView from './view/recipeView';
 import { elements, renderLoader, clearLoader } from './view/base';
 import Recipe from './modules/Recipe';
 
@@ -58,6 +59,12 @@ const controlRecipe = async () => {
 
     if(id){ 
         // Prepare UI for changes
+        recipeView.clearRecipe();
+        renderLoader(elements.recipe);
+
+        if(state.search){
+            searchView.higlightSelected(id);
+        }
 
         // Create new recipe object
         state.recipe = new Recipe(id);
@@ -69,7 +76,8 @@ const controlRecipe = async () => {
             state.recipe.calcTime();
             state.recipe.calcServings();
             // Render recipe
-            console.log(state.recipe);
+            clearLoader();
+            recipeView.renderRecipe(state.recipe);
         } catch (error){
             alert('Error processing!');
         }
@@ -79,4 +87,4 @@ const controlRecipe = async () => {
 
 // window.addEventListener('hashchange', controlRecipe);
 // window.addEventListener('load', controlRecipe);
-['haschange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
+['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));

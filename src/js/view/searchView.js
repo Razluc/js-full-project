@@ -11,6 +11,15 @@ export const clearResults = () => {
     elements.searchResPages.innerHTML = '';
 }
 
+export const higlightSelected = id => {
+    const resultsArr = Array.from(document.querySelectorAll('.results__link'));
+    resultsArr.forEach(el => {
+        el.classList.remove();
+    })
+
+    document.querySelector(`a[href="#${id}"]`).classList.add('results__link--active');
+}
+
 const limitRecipieTitle = (title, limit = 17) => {
     const newTitle = [];
 

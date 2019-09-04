@@ -4,6 +4,7 @@ import * as searchView from './view/searchView';
 import * as recipeView from './view/recipeView';
 import { elements, renderLoader, clearLoader } from './view/base';
 import Recipe from './modules/Recipe';
+import List from './modules/List';
 
 /** Glogal state of the app
  * - Search Objec
@@ -103,5 +104,6 @@ elements.recipe.addEventListener('click', e => {
         state.recipe.updateServings('inc');
         recipeView.updateServingsIngredients(state.recipe);
     }
-    console.log(state.recipe);
 })
+
+window.l = new List();

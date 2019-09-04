@@ -39,13 +39,13 @@ export default class Recipe {
             // 1 Uniforfim units
             let ingredient = el.toLowerCase();
             unitsLong.forEach((unit, i) => {
-                ingredient = ingredient.replace(unit, unitsShort[i]);   
+                ingredient = ingredient.replace(unit, unitsShort[i]);
             });
 
-            // 2 Remove parantheses
-            ingredient = ingredient.replace(/ *\([^)]*\) */g, "");
+            // 2) Remove parentheses
+            ingredient = ingredient.replace(/ *\([^)]*\) */g, ' ');
 
-            // 3 Parse ingredients into count, unit and ingredient
+            // 3) Parse ingredients into count, unit and ingredient
             const arrIng = ingredient.split(' ');
             const unitIndex = arrIng.findIndex(el2 => units.includes(el2));
 
@@ -75,8 +75,8 @@ export default class Recipe {
                     ingredient: arrIng.slice(1).join(' ')
                 }
 
-            }else if(unitIndex === -1){
-                // There is NO unit and no number in 1 st position
+            }else if (unitIndex === -1) {
+                // There is NO unit and NO number in 1st position
                 objIng = {
                     count: 1,
                     unit: '',

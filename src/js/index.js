@@ -2,6 +2,7 @@
 import Search from './modules/Search';
 import * as searchView from './view/searchView';
 import * as recipeView from './view/recipeView';
+import * as listView from './view/listView';
 import { elements, renderLoader, clearLoader } from './view/base';
 import Recipe from './modules/Recipe';
 import List from './modules/List';
@@ -13,6 +14,7 @@ import List from './modules/List';
  * - Linked recipes
  */
 const state = {};
+window.state = state;
 
 const controlSearch = async () => {
     // 1 Get the query from view
@@ -82,13 +84,47 @@ const controlRecipe = async () => {
         } catch (error){
             alert('Error processing!');
         }
-        
+        console.log(state.recipe.ingredients);
     }
 }
-
 // window.addEventListener('hashchange', controlRecipe);
 // window.addEventListener('load', controlRecipe);
 ['hashchange', 'load'].forEach(event => window.addEventListener(event, controlRecipe));
+
+/**
+ * Recipe Controller
+ */
+const controlList = () => {
+    // Create a new list if there is none yet
+    if(!state.list){
+        state.list = new List();
+    }
+
+    // Add each ingredient to the list and UI
+    state.recipe.ingredients.forEach(el => {
+        const item = state.list.addItem(el.count, el.unit, el.ingredient);
+        listView.renderItem(item);
+    })
+}
+
+// Handle  delete and update shopping list
+elements.shopping.addEventListener('click', e => {
+    const id = e.target.closest('.shopping__item').dataset.itemid;
+
+    // Handle the delete button
+    if(e.target.matches('.shopping__delete, .shopping__delete *')){
+
+        // Delete from state 
+        state.list.deleteItem(id);
+
+        // Detele from UI
+        listView.deletItem(id);
+        // Handle 
+    } else if(e.target.matches('.shopping_count-value')){
+        const val = parseInt(e.target.value, 10);
+        state.list.updateCount(id, val);
+    }
+})
 
 // Handling recipe button clicks
 
@@ -103,6 +139,8 @@ elements.recipe.addEventListener('click', e => {
         // Increase button 
         state.recipe.updateServings('inc');
         recipeView.updateServingsIngredients(state.recipe);
+    } else if(e.target.matches('.recipe__btn--add, .recipe__btn--add *')){
+         controlList();
     }
 })
 

@@ -17,10 +17,10 @@ export const higlightSelected = id => {
         el.classList.remove();
     })
 
-    document.querySelector(`a[href="#${id}"]`).classList.add('results__link--active');
+    document.querySelector(`.results__link[href="#${id}"]`).classList.add('results__link--active');
 }
 
-const limitRecipieTitle = (title, limit = 17) => {
+export const limitRecipieTitle = (title, limit = 17) => {
     const newTitle = [];
 
     if(title.length > limit){
